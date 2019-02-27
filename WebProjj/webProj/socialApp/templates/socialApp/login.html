@@ -1,0 +1,35 @@
+{% extends "socialApp/base.html" %}
+
+{% block content %}
+{%if registration %}
+
+<p> Registration successful! Welcome {{ username }}!</p>
+{% endif %}
+{% if error_message %}
+<p>
+  <strong>{{ error_message }}</strong>
+</p>
+{% endif %}
+
+{% if error_message2 %}
+<p>
+  <strong>{{ error_message2 }}</strong>
+</p>
+{% endif %}
+<div class="jumbotron jumbotron-fluid">
+<h1 id="Sub_container_title">Login </h1>
+    <br>
+<form method='POST' action="{% url 'login' %}">
+           	{% csrf_token %}
+      <input class="form-control" placeholder="Username" type='text'  id='username' name='username'>
+      <input class="form-control" placeholder="Password" type='password'  name='password'><br>
+   <br>
+      <input type='submit' class="btn btn-primary btn-lg" value='Login'/>
+      <form method="get" action="/signup/">
+      <a href="{% url 'signup' %}"> <button type="button" class="btn btn-primary btn-lg">Signup</button></a>
+<a href="{% url 'index' %}">  <button type="button" class="btn btn-primary btn-lg">Back to main</button></a>
+     </form>
+</form>
+</div>
+
+{% endblock %}

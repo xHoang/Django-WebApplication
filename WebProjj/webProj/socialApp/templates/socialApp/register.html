@@ -1,0 +1,44 @@
+{% extends "socialApp/base.html" %}
+{% block content %}
+<body>
+  {% if error_message %}
+  <p>
+    <strong>{{ error_message }}</strong>
+  </p>
+  {% endif %}
+  <div class="form-group">
+ <form class="signup_form" method='POST' action="{% url 'register' %}"  enctype='multipart/form-data'>
+      {% csrf_token %}
+            <label class="name">Name :</label>
+            <input type="text" maxlength='25'name="name" pattern="[[^A-Za-z ]{3,25}"title="Only letters are accepted."pattern="[a-zA-Z]*" id="name" placeholder="Enter your name" class="form-control " required>
+            <!--- username---->
+            <label class="username">Username :</label>
+            <input type="text"  name="username" id="username" placeholder="Enter your Username" class="form-control last" required>
+            <!-----date of birth---->
+            <label class="age" >Date of Birth :</label>
+            <input type="date" name="dob" id='dob' class="form-control" max="9999-12-31">
+            <!-----email---->
+            <label class="mail" >Email :</label>
+            <input type="email" name="email" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$]" title="Please enter a valid email address."id="email"placeholder="Enter your email" class="form-control" required >
+            <!-----Password---->
+            <label class="password">Password :</label>
+            <input type="password"maxlength='16' name="password" id="password" placeholder="Enter your Password" class="form-control" required>
+            <!----------- Gender-------->
+            <label class="form-check-label">Gender:</label>
+            <input class="form-check-input" type="radio" name="gender"  id="gender" value="M">Male</input>
+            <input class="form-check-input" type="radio"  name="gender" id="gender" value="F" >Female</input>
+            <!----------- For Hobby-------->
+             <br/><label class="hobby">Hobbies:</label>
+            <select name ="hobby" class="selectpicker" data-style="btn-default" data-width="100%" multiple>
+            {% for hobbys in hobby %} <option value="{{ hobbys }}" >{{ hobbys }}</option>{% endfor %}
+            </select>
+            <!----------- Profile image-------->
+            <label >Upload your avatar</label>
+            <input class="form-control" type="file" name="image" class="image" id="image" required <br/> <br/>
+            <!----------- Sign in Button -------->
+            <input type="submit" class="btn btn-primary btn-lg" id="register_button" value="Register"/>
+            <a href="{% url 'index' %}"><button type="button" class="btn btn-primary btn-lg">Back to main</button></a>
+</form>
+</div>
+<body>
+{% endblock %}

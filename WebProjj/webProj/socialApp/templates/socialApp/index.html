@@ -1,0 +1,20 @@
+{% extends "socialApp/base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+  {% if logout %}
+  <p>
+    <strong>{{ logout }}</strong>
+  </p>
+  {% endif %}
+  <h1 class="display-4">Hello, There!</h1>
+  <p class="lead">Welcome to PhoenixFortune, a matching website powered by Django!</p>
+  <hr class="my-4">
+  <p>Please Login or Sign Up to proceed!</p>
+  <p class="lead">
+    <a href="{% url 'register' %}"><button type="button" class="btn btn-primary btn-lg"">Signup</button>  </a>
+    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary btn-lg"">Login</button> </a>
+  </p>
+</div>
+{% endblock %}

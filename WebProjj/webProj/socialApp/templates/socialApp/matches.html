@@ -1,0 +1,116 @@
+
+<html>
+<head>
+  <title>PhoenixFortune</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+  <body>
+          {% load static %}
+      {% if error_message %}
+      <p>
+        <strong>{{ error_message }}</strong>
+      </p>
+      {% endif %}
+          <a href="{% url 'profile' %}">
+         <button type="button" class="btn btn-success btn-lg btn-block">Back To Profile</button>
+        </a>
+                <label for="gender">Gender:</label>
+                <select class="form-control" name="gender" id="gender">
+                  {% for value, gender in genders %}
+                  <option value="{{ value }}">{{ gender }}</option>
+                  {% endfor %}
+                  <option value="both" selected="selected">Both</option>
+                </select>
+
+                <label for="min_age">Minimum Age:</label>
+                <input type="number" value="0" min="0" max="100" step="1" name="min_age" id="min_age" class="form-control">
+
+
+                <label for="max_age">Maximum Age:</label>
+                <input type="number" value="100" min="0" max="100" step="1" name="max_age" id="max_age" class="form-control">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                </div>
+              </div>
+            </div>
+<button type="button" class="btn btn-primary btn-lg btn-block" id="filter">Filter</button>
+
+
+      {% load static %}
+      <div id="container">
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+  <script>
+    // This will attempt to send an email when a user has pressed the poke button by calling the view poke/ via Ajax
+    function poke(pk,event){
+      event.preventDefault();
+      $.ajax({
+          type:'POST',
+          url:'poke/',
+          data:{
+            pk: pk
+          },
+          beforeSend: function (tkn) {
+            tkn.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+          },
+          success: function(data) {
+            alert("Email has been sent to user notifying them of your poke!");
+          }
+       });
+    }
+    //Display all items
+    function outputUsers(data){
+      for (var i=0;i<data.length;i++) {
+        output = "";
+        {% load static %}
+        output = "<div class='card col-12'><div class='card-body text-center'><div class='row'><div class='text-center col-4'><img class='img-fluid' src='"+
+        data[i]['image']+"' /></div><div class='col-8'><h1>Similarity Points: ";
+        output = output + data[i]['similarity'];
+        output = output + "</h1><p class='lead'>Name:" + data[i]['name'] + "<br /> Age: " +
+        data[i]['age']+"<br />Gender: "+ data[i]['gender'];
+        output = output + "<br /><br /><button type='button' class='btn btn-info btn-block' onclick='poke("+data[i]['pk']+",event)'>Poke</button></ul></p></div></div></div></div>";
+        $("#container").append(output);
+      }
+    }
+
+    $(document).ready(function(){
+      $.ajax({
+        type:'GET',
+        url:'getMatches/',
+        success: function(data) {
+          outputUsers(data);
+        },
+      });
+    });
+
+    $("#filter").click(function(e){
+      e.preventDefault();
+      var gender = $("#gender").val();
+      var min_age = $("#min_age").val();
+      var max_age = $("#max_age").val();
+      $.ajax({
+        type:'POST',
+        url:'getMatches/',
+        data:{
+          gender:gender,
+          min_age:min_age,
+          max_age:max_age,
+        },
+        beforeSend: function (tkn) {
+          tkn.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        },
+        success: function(data) {
+          $("#container").html("");
+          outputUsers(data);
+        },
+      });
+    });
+  </script>
+</html>

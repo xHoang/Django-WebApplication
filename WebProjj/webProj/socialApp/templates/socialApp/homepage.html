@@ -1,0 +1,17 @@
+{% extends "socialApp/base.html" %}
+{% block content %}
+<html>
+
+
+<div class="jumbotron">
+  <h1 class="display-4">Welcome!</h1>
+  <p class="lead">Feel free to click any of the buttons to experience our great features! </p>
+  <hr class="my-4">
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'findMatches' %}" role="button">Search and poke</a>
+    <a class="btn btn-primary btn-lg" href="{% url 'profile' %}" role="button">Edit your profile</a>
+	 <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
+  </p>
+</div>
+</html>
+{% endblock %}
