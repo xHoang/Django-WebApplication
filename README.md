@@ -23,3 +23,5 @@ a) Users	are	able	to	request	to	connect	with	another	user.	The	other	user	would	
 need	to	approve	the	request.	
 b) UsersQ	are	able	to	“like”	other	users	—	and	users	receive	alerts	or	emails	when	
 someone	likes	them.	
+
+Deployed website: http://priom.pythonanywhere.com/
