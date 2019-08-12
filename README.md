@@ -1,4 +1,4 @@
-# Django-WebApplication
+# UniLover
 A matching website created using the Django framework
 Description:	Your	task	is	to	develop	a	matching	website	using	the	Django	framework.	
 The	website	should	provide	the	following	basic	functionalities:		
